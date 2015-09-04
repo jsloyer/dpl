@@ -7,8 +7,16 @@ module DPL
         context.shell 'rm temp.deb'
       end
 
+      def install_plugin
+        if options[:plugin]
+          context.shell 'go get #{option["plugin"]["url"]}'
+          context.shell 'cf install-plugin #{option["plugin"]["installCommand"]}'
+        end
+      end
+
       def check_auth
         initial_go_tools_install
+        install_plugin
         context.shell "cf api #{option(:api)} #{'--skip-ssl-validation' if options[:skip_ssl_validation]}"
         context.shell "cf login --u #{option(:username)} --p #{option(:password)} --o #{option(:organization)} --s #{option(:space)}"
       end
