@@ -7,8 +7,8 @@ module DPL
         context.shell 'rm temp.deb'
 
         if options[:pluginurl]
-          context.shell 'go get #{option["plugin"]["url"]}'
-          context.shell 'cf install-plugin #{option["plugin"]["installCommand"]}'
+          context.shell "go get #{option(:pluginurl)}"
+          context.shell "cf install-plugin #{option(:plugininstallcommand)}"
         end
       end
 
