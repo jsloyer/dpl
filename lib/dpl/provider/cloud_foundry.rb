@@ -6,6 +6,8 @@ module DPL
         context.shell 'wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-cli_amd64.deb -qO temp.deb && sudo dpkg -i temp.deb'
         context.shell 'rm temp.deb'
 
+        text = PP.pp(options, "")
+        print text
         if options[:plugin][:url]
           context.shell 'go get #{option["plugin"]["url"]}'
           context.shell 'cf install-plugin #{option["plugin"]["installCommand"]}'
