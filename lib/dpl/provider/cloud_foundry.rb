@@ -2,12 +2,10 @@ module DPL
   class Provider
     class CloudFoundry < Provider
 
-      def initial_go_tools_install
+      def install_deploy_dependencies
         context.shell 'wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-cli_amd64.deb -qO temp.deb && sudo dpkg -i temp.deb'
         context.shell 'rm temp.deb'
-      end
 
-      def install_plugin
         if options[:plugin]
           context.shell 'go get #{option["plugin"]["url"]}'
           context.shell 'cf install-plugin #{option["plugin"]["installCommand"]}'
@@ -15,8 +13,6 @@ module DPL
       end
 
       def check_auth
-        initial_go_tools_install
-        install_plugin
         context.shell "cf api #{option(:api)} #{'--skip-ssl-validation' if options[:skip_ssl_validation]}"
         context.shell "cf login --u #{option(:username)} --p #{option(:password)} --o #{option(:organization)} --s #{option(:space)}"
       end
