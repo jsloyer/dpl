@@ -7,7 +7,7 @@ module DPL
         context.shell 'rm temp.deb'
 
         if options[:pluginurl]
-          context.shell "whereis go"
+          context.shell "export GOPATH=$TRAVIS_BUILD_DIR"
           context.shell "curl -L https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz | tar xz"
           context.shell "go get #{option(:pluginurl)}"
           context.shell "cf install-plugin #{option(:plugininstallcommand)}"
